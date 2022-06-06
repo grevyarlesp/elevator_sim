@@ -1,7 +1,4 @@
-import sys
-sys.path.append('../src')
-
-from task_tree import TaskTree
+from app.task_tree import TaskTree
 import pytest
 
 def test_task_tree_init():

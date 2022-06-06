@@ -12,10 +12,8 @@ log = logging.getLogger("uvicorn")
 class Settings(BaseSettings):
     environment: str = os.getenv("ENVIRONMENT", "dev")
     testing: bool = os.getenv("TESTING", 0)
-
     num_cabins : int = os.getenv("NUM_CABINS", 10)
     num_floors : int = os.getenv("NUM_FLOORS", 10)
-
 
 @lru_cache()
 def get_settings() -> BaseSettings:

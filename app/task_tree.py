@@ -5,6 +5,7 @@ Find the next floor with tasks in O(log n), with n is the number of floor
 
 import logging
 
+from app.config import get_settings
 
 class TaskTree:
     def __init__(self, num_floors : int = 10):
@@ -90,10 +91,10 @@ class TaskTree:
         """
 
         if (floor < 1 or floor > self.__num_floors):
-            logging.warning("Request invalid floor!" + " " + str(floor) + " " + str(self.__num_floors))
+            # logging.warning("Request invalid floor!" + " " + str(floor) + " " + str(self.__num_floors))
             return False
         if (task < 0 or task > self.__num_floors):
-            logging.warning("Request invalid tasks!" + " " + str(floor) + " " + str(self.__num_floors))
+            # logging.warning("Request invalid tasks!" + " " + str(floor) + " " + str(self.__num_floors))
             return False
 
         # Noone is going to the same floor!!!!
@@ -101,7 +102,9 @@ class TaskTree:
             return False
 
         self.__tasks_sets[floor].add(task)
-        print("Number of tasks", floor, len(self.__tasks_sets[floor]))
+
+        if (get_settings().testing):
+            print("Number of tasks", floor, len(self.__tasks_sets[floor]))
 
         num_tasks = len(self.__tasks_sets[floor])
         self.__mod_tree(1, 1, self.__num_floors, floor, num_tasks)
