@@ -6,3 +6,4 @@ asyncpg==0.25.0
 tortoise-orm==0.17.8
 sortedcontainers==2.4.0
 pytest-cov==3.0.0
+pytest-mock==3.7.0
