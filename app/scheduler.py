@@ -9,16 +9,18 @@ from app.cabin import Cabin
 log = logging.getLogger("uvicorn")
 
 
-class Scheduler:
+class _Scheduler:
   """
   The scheduler for the elevators.
   """
+  _instance = None
 
   def __init__(self, num_floors: int, num_cabins: int):
     self.num_floors = num_floors
     self.num_cabins = num_cabins
     self.next = 0
     self.cabins = [Cabin(self.num_floors) for _ in range(self.num_cabins)]
+
   def start_cabins(self):
     for cabin in self.cabins:
       cabin.start()
@@ -29,8 +31,15 @@ class Scheduler:
       log.info("(%d, %d) assigned to cabin %s,", src_floor, dest_floor,
                self.cabins[self.next].name)
 
-    self.next = (self.next + 1) % self.num_floors
+    self.next = (self.next + 1) % self.num_cabins
 
   def __del__(self):
     for cabin in self.cabins:
       cabin.terminate()
+
+
+def Scheduler():
+  if _Scheduler._instance is None:
+    _Scheduler._instance = _Scheduler(get_settings().num_floors,
+                                      get_settings().num_cabins)
+  return _Scheduler._instance
