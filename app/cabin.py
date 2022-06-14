@@ -74,7 +74,7 @@ class Cabin(Thread):
         self.cabin_attribute.move()
         time.sleep(get_settings().cabin_time / 1000.0)
 
-        self.fullfill_tasks_on_floor(self.cabin_attribute.get_current_floor())
+      self.fullfill_tasks_on_floor(self.cabin_attribute.get_current_floor())
 
       # Pause if reached target
       if self.cabin_attribute.reached_target():
