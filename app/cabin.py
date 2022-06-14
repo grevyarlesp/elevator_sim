@@ -1,6 +1,6 @@
 import logging
 import os
-from threading import Thread, Lock
+from threading import Thread, Lock 
 import time
 from app import cabin_attribute
 
@@ -37,19 +37,6 @@ class Cabin(Thread):
       return self.task_tree.query_up(self.cabin_attribute.get_current_floor())
     else:  # going down
       return self.task_tree.query_down(self.cabin_attribute.get_current_floor())
-
-  def stop(self):
-    """
-      Stop the elevator
-      """
-
-    # Move this to the loop!
-    if get_settings().output_log:
-      log.info("Stopping elevator %s at %d", self.name,
-               self.cabin_attribute.get_current_floor())
-
-    self.vec = 0
-    self.target = -1
 
   def run(self):
 

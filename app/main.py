@@ -7,13 +7,19 @@ app = FastAPI()
 user = 0
 
 log = logging.getLogger("uvicorn")
-scheduler = Scheduler(get_settings().num_floors, get_settings().num_cabins)
-
 
 @app.on_event("startup")
-async def startup_event():
+def startup_event():
   log.info("Starting the elevators...")
+  scheduler = Scheduler()
   scheduler.start_cabins()
+
+
+@app.on_event("shutdown")
+def shutdown_event():
+  log.info("Stopping the elevators")
+  scheduler = Scheduler()
+  scheduler.terminate()
 
 
 @app.get("/")
@@ -47,6 +53,5 @@ async def post_request(src_floor: int = Path(title="From floor",
                                               default=-1)):
   if src_floor == -1 or dest_floor == -1:
     return
-  global scheduler
-  scheduler.process_request(src_floor, dest_floor)
+  Scheduler().process_request(src_floor, dest_floor)
   return 0

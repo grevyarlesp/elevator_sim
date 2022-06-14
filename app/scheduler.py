@@ -33,7 +33,7 @@ class _Scheduler:
 
     self.next = (self.next + 1) % self.num_cabins
 
-  def __del__(self):
+  def terminate(self):
     for cabin in self.cabins:
       cabin.terminate()
 
