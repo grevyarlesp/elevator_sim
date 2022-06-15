@@ -113,8 +113,11 @@ class TaskTree:
     with self._lock:
       tasks_set = self.__tasks_sets
 
+      b = False
+
       # get each task from the that floor to fullfill.
       while len(tasks_set[floor]) > 0:
+        b = True
         next_floor = tasks_set[floor].pop()
 
         if next_floor == 0:
@@ -127,5 +130,5 @@ class TaskTree:
 
       num_tasks = len(tasks_set[floor])
       self.__mod_set(floor, num_tasks)
-
       assert num_tasks == 0
+      return b

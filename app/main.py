@@ -8,6 +8,7 @@ user = 0
 
 log = logging.getLogger("uvicorn")
 
+
 @app.on_event("startup")
 def startup_event():
   log.info("Starting the elevators...")
@@ -53,5 +54,4 @@ async def post_request(src_floor: int = Path(title="From floor",
                                               default=-1)):
   if src_floor == -1 or dest_floor == -1:
     return
-  Scheduler().process_request(src_floor, dest_floor)
-  return 0
+  return Scheduler().process_request(src_floor, dest_floor)

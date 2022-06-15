@@ -1,6 +1,6 @@
 import logging
 import os
-from threading import Thread, Lock 
+from threading import Thread, Lock
 import time
 from app import cabin_attribute
 
@@ -30,7 +30,9 @@ class Cabin(Thread):
     self.task_tree.add_task(src_floor, task)
 
   def fullfill_tasks_on_floor(self, floor):
-    self.task_tree.fullfill_all_tasks_on_floor(floor)
+    if (self.task_tree.fullfill_all_tasks_on_floor(floor) and
+        get_settings().output_log):
+      log.info("Picking up at %d", self.cabin_attribute.get_current_floor())
 
   def get_next_task(self, cabin_dir):
     if cabin_dir > 0:  # going up
@@ -77,11 +79,13 @@ class Cabin(Thread):
 
         if get_settings().output_log:
           if next_task != -1:
-            log.info("Cabin %s: Task found at %d", self.name, next_task)
+            log.info("Cabin %s: At %d Task found at %d", self.name,
+                     self.cabin_attribute.get_current_floor(), next_task)
             prev_task = True
           elif prev_task:
             prev_task = False
-            log.info("Cabin %s: Found no task, continue sleeping...", self.name)
+            log.info("Cabin %s: At %d Found no tasks,... sleeping", self.name,
+                     self.cabin_attribute.get_current_floor())
 
   def terminate(self):
     self._running = False

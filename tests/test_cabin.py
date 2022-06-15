@@ -6,11 +6,10 @@ import time
 
 
 def test_cabin_1(mocker):
-
-  NUM_FLOORS = 10
+  num_floors = 10
   tasks = [(5, 3), (2, 7), (4, 3), (1, 0), (5, 0)]
 
-  cabin = Cabin(NUM_FLOORS)
+  cabin = Cabin(num_floors)
   cabin.start()
 
   for u, v in tasks:

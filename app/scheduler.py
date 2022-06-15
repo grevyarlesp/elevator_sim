@@ -31,7 +31,11 @@ class _Scheduler:
       log.info("(%d, %d) assigned to cabin %s,", src_floor, dest_floor,
                self.cabins[self.next].name)
 
+
+    ans = self.next
     self.next = (self.next + 1) % self.num_cabins
+    return ans
+
 
   def terminate(self):
     for cabin in self.cabins:
