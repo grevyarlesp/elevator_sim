@@ -23,7 +23,7 @@ class Cabin(Thread):
     self.num_floors = num_floors
 
     self.cabin_attribute = CabinAttribute(1, num_floors)
-    self.task_tree = TaskTree()
+    self.task_tree = TaskTree(self.num_floors)
     self._running = True
 
   def add_task(self, src_floor: int, task: int):

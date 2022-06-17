@@ -21,6 +21,8 @@ class _Scheduler:
     self.next = 0
     self.cabins = [Cabin(self.num_floors) for _ in range(self.num_cabins)]
 
+
+    
   def start_cabins(self):
     for cabin in self.cabins:
       cabin.start()

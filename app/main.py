@@ -54,4 +54,5 @@ async def post_request(src_floor: int = Path(title="From floor",
                                               default=-1)):
   if src_floor == -1 or dest_floor == -1:
     return
+  log.info("Task %d %d received", src_floor, dest_floor)
   return Scheduler().process_request(src_floor, dest_floor)

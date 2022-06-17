@@ -3,8 +3,8 @@ FROM python:3.10.1-slim-buster
 
 
 # set working directory
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+RUN mkdir -p /usr/src/
+WORKDIR /usr/src
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -24,4 +24,6 @@ RUN pip install -r requirements.txt
 # Copy everything
 COPY . .
 
-CMD uvicorn app.main:app --reload --workers 1 --host 0.0.0.0 --port 8000
+WORKDIR /usr/src
+
+CMD ./run.sh

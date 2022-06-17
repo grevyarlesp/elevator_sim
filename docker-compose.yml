@@ -3,10 +3,10 @@ version: '3.8'
 services:
   webapi:
     container_name: elevator_webapi
-    build: ./
-    # command: uvicorn app.main:app --reload --workers 1 --host 0.0.0.0 --port 8000
+    image: ggnore/elevator_webapi:latest
+    build: ./elevator-project
     volumes:
-      - ./elevator-project:/usr/src/app
+      - ./elevator-project:/usr/src
     ports:
       - 8005:8000
     environment:

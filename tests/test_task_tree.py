@@ -50,6 +50,20 @@ def test_task_tree_query_up():
   ans = tasktree.query_up(10)
   assert ans == 11
 
+def test_task_tree_query_up_2():
+  tasktree = TaskTree(num_floors=100)
+
+  assert tasktree.add_task(10, 0)
+  assert tasktree.add_task(50, 0)
+  ans = tasktree.query_up(10)
+  assert ans == 10
+
+  ans = tasktree.query_up(1)
+  assert ans == 10
+
+
+
+
 
 def test_task_tree_query_down():
   tasktree = TaskTree(num_floors=100)

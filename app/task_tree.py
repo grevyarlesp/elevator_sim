@@ -12,7 +12,7 @@ class TaskTree:
   Implemented to be thread safe
   """
 
-  def __init__(self, num_floors: int = 10):
+  def __init__(self, num_floors):
     """Floors : numbered from 1 to n
     """
     self.__num_floors = num_floors
