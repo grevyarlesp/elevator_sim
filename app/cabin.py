@@ -6,11 +6,13 @@ from app import cabin_attribute
 
 from app.task_tree import TaskTree
 from app.config import get_settings
-from app.cabin_attribute import CabinAttribute
+from app.cabin_attribute import CabinAttribute, CabinDir
 
 import pdb
 
 log = logging.getLogger("uvicorn")
+
+
 
 
 class Cabin(Thread):
@@ -32,13 +34,23 @@ class Cabin(Thread):
   def fullfill_tasks_on_floor(self, floor):
     if (self.task_tree.fullfill_all_tasks_on_floor(floor) and
         get_settings().output_log):
-      log.info("Picking up at %d", self.cabin_attribute.get_current_floor())
+      log.info("Cabin %s Picking up at %d", self.name,
+               self.cabin_attribute.get_current_floor())
 
+
+  def get_task_up(self):
+    return self.task_tree.query_up(1)
+
+  def get_task_down(self):
+    return self.task_tree.query_down(50)
+
+
+  # Keep for testing
   def get_next_task(self, cabin_dir):
     if cabin_dir > 0:  # going up
-      return self.task_tree.query_up(self.cabin_attribute.get_current_floor())
+      return self.task_tree.query_up(1)
     else:  # going down
-      return self.task_tree.query_down(self.cabin_attribute.get_current_floor())
+      return self.task_tree.query_down(50)
 
   def run(self):
 
@@ -70,10 +82,20 @@ class Cabin(Thread):
         self.cabin_attribute.pause()
 
       if self.cabin_attribute.is_paused():
+
+
+        dir = self.cabin_attribute.get_dir()
         # up first
-        next_task = self.get_next_task(1)
-        if next_task == -1:
-          next_task = self.get_next_task(0)
+
+        if dir == CabinDir.UP:
+          next_task = self.get_task_up()
+          if next_task == -1:
+            next_task = self.get_task_down()
+        else:
+          next_task = self.get_task_down()
+          if next_task == -1:
+            next_task = self.get_task_up()
+
         if next_task != -1:
           self.cabin_attribute.set_target_and_move(next_task)
 

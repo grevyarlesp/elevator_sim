@@ -1,6 +1,12 @@
 from app.config import get_settings
 
+from enum import Enum
+
 from threading import Lock
+
+class CabinDir(Enum):
+  UP = 1
+  DOWN = 2
 
 
 class CabinAttribute:
@@ -17,8 +23,16 @@ class CabinAttribute:
     self.vel: int = 0
     self.target: int = -1
 
+    self.dir = CabinDir.UP
+
     # Number of floors
     self.num_floors = num_floors
+
+  def get_dir(self):
+    with self._lock:
+      return self.dir
+
+
 
   def set_target_and_move(self, target: int):
     """
@@ -30,9 +44,11 @@ class CabinAttribute:
         return
       self.target = target
       if self.current_floor < self.target:
+        self.dir = CabinDir.UP
         self.vel = 1
       else:
         self.vel = -1
+        self.dir = CabinDir.DOWN
 
   def move(self):
     with self._lock:

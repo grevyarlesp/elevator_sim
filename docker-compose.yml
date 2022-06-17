@@ -4,13 +4,13 @@ services:
   webapi:
     container_name: elevator_webapi
     image: ggnore/elevator_webapi:latest
-    build: ./elevator-project
+    build: ./
     volumes:
-      - ./elevator-project:/usr/src
+      - ./:/usr/src
     ports:
       - 8005:8000
     environment:
       - ENVIRONMENT=dev
       - TESTING=0
-      - NUM_CABINS=10
+      - NUM_CABINS=1
       - NUM_FLOORS=100
