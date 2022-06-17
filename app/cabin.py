@@ -84,10 +84,10 @@ class Cabin(Thread):
       if self.cabin_attribute.is_paused():
 
 
-        dir = self.cabin_attribute.get_dir()
+        cabin_dir = self.cabin_attribute.get_dir()
         # up first
 
-        if dir == CabinDir.UP:
+        if cabin_dir == CabinDir.UP:
           next_task = self.get_task_up()
           if next_task == -1:
             next_task = self.get_task_down()
