@@ -1,6 +1,7 @@
 # pull official base image
 FROM python:3.10.1-slim-buster
 
+
 # set working directory
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
@@ -22,3 +23,5 @@ RUN pip install -r requirements.txt
 # add app
 # Copy everything
 COPY . .
+
+CMD uvicorn app.main:app --reload --workers 1 --host 0.0.0.0 --port 8000
