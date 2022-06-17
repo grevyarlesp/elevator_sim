@@ -12,5 +12,6 @@ services:
     environment:
       - ENVIRONMENT=dev
       - TESTING=0
+      - CABIN_TIME=200
       - NUM_CABINS=1
       - NUM_FLOORS=100

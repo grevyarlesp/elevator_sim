@@ -38,10 +38,10 @@ class Cabin(Thread):
                self.cabin_attribute.get_current_floor())
 
 
-  def get_task_up(self):
+  def get_task_down(self):
     return self.task_tree.query_up(1)
 
-  def get_task_down(self):
+  def get_task_up(self):
     return self.task_tree.query_down(50)
 
 
